@@ -61,13 +61,13 @@ export function Terminal({ registry, welcome }: TerminalProps) {
   return (
     <div className={styles.terminal} onClick={handleClick}>
       {showWelcome && <WelcomeSlot render={welcome} run={run} />}
-      <div role="log" aria-live="polite" className={styles.log}>
+      <div role="log" aria-live="polite">
         {history.map((entry) => (
           <OutputLine key={entry.id} entry={entry} />
         ))}
       </div>
       <Prompt value={value} onChange={setValue} onSubmit={submit} inputRef={inputRef} />
-      <div ref={endRef} />
+      <div ref={endRef} className={styles.end} />
     </div>
   );
 }
