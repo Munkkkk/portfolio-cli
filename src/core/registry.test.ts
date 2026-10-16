@@ -23,6 +23,10 @@ describe("createRegistry", () => {
     expect(() => createRegistry([echo, echo])).toThrow(/echo/);
   });
 
+  it("throws on non-lowercase command names", () => {
+    expect(() => createRegistry([{ ...echo, name: "Echo" }])).toThrow(/lowercase/);
+  });
+
   it("lists commands in order", () => {
     expect(createRegistry([echo, boom]).list()).toEqual([echo, boom]);
   });

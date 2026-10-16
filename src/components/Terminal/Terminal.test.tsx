@@ -1,9 +1,9 @@
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { Terminal } from "./Terminal";
 import { Welcome } from "./Welcome";
-import type { Registry } from "@/core/registry";
+import { createRegistry, type Registry } from "@/core/registry";
 import type { CommandContext } from "@/core/types";
 
 const registry: Registry = {
@@ -69,5 +69,44 @@ describe("Terminal", () => {
     const user = setup();
     await user.click(screen.getByRole("button", { name: "echo hi" }));
     expect(screen.getByRole("log")).toHaveTextContent("hi");
+  });
+});
+
+describe("Terminal error handling", () => {
+  function setupReal() {
+    const real = createRegistry([
+      { name: "echo", description: "echo", run: (args) => <p>{args.join(" ")}</p> },
+      {
+        name: "boom",
+        description: "throws",
+        run: () => {
+          throw new Error("kaboom");
+        },
+      },
+    ]);
+    render(<Terminal registry={real} welcome={() => null} />);
+    return userEvent.setup();
+  }
+
+  it("shows an error for an unknown command and stays usable", async () => {
+    const user = setupReal();
+    await user.type(input(), "foo{Enter}");
+    const log = screen.getByRole("log");
+    expect(log).toHaveTextContent('command not found: foo. Type "help" to see available commands.');
+    await user.type(input(), "echo still-here{Enter}");
+    expect(within(log).getByText("still-here")).toBeInTheDocument();
+  });
+
+  it("survives a throwing command and stays usable", async () => {
+    const spy = vi.spyOn(console, "error").mockImplementation(() => {});
+    const user = setupReal();
+    await user.type(input(), "boom{Enter}");
+    const log = screen.getByRole("log");
+    expect(log).toHaveTextContent("error: boom failed");
+    expect(input()).toHaveValue("");
+    await user.type(input(), "echo after{Enter}");
+    expect(within(log).getByText("after")).toBeInTheDocument();
+    expect(spy).toHaveBeenCalled();
+    spy.mockRestore();
   });
 });

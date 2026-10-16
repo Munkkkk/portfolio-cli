@@ -40,11 +40,12 @@ describe("outputs", () => {
       expect(container.textContent).toContain(c.description);
     });
   });
-  it("about", () => {
+  it("about shows name, title, bio and location", () => {
     const { run } = setup();
     const { container } = renderOutput(run("about"));
-    expect(container.textContent).toContain(profile.name);
-    expect(container.textContent).toContain(profile.title);
+    [profile.name, profile.title, profile.bio, profile.location].forEach((t) =>
+      expect(container.textContent).toContain(t),
+    );
   });
   it("about ignores extra args", () => {
     const { run } = setup();
@@ -52,50 +53,76 @@ describe("outputs", () => {
     const b = renderOutput(run("about", ["extra"])).container.innerHTML;
     expect(b).toBe(a);
   });
-  it("experience lists all", () => {
+  it("experience lists role, company and dates", () => {
     const { run } = setup();
     const { container } = renderOutput(run("experience"));
     experiences.forEach((e) => {
       expect(container.textContent).toContain(e.role);
       expect(container.textContent).toContain(e.company);
+      expect(container.textContent).toContain(`${e.start} - ${e.end}`);
     });
   });
   it("experience 1 shows detail only", () => {
     const { run } = setup();
     const { container } = renderOutput(run("experience", ["1"]));
-    expect(container.textContent).toContain(experiences[0].highlights[0]);
+    experiences[0].highlights.forEach((h) => expect(container.textContent).toContain(h));
+    expect(container.textContent).toContain(`${experiences[0].start} - ${experiences[0].end}`);
     expect(container.textContent).not.toContain(experiences[1].company);
   });
-  it.each(["0", "-1", "abc", "99"])("experience %s shows usage", (arg) => {
+  it.each(["0", "-1", "abc", "99"])("experience %s shows a clear error with usage", (arg) => {
     const { run } = setup();
     const { container } = renderOutput(run("experience", [arg]));
+    expect(container.textContent).toContain("error: invalid experience number");
+    expect(container.textContent).toContain(`"${arg}"`);
+    expect(container.textContent).toContain(`1-${experiences.length}`);
     expect(container.textContent).toContain("experience [n]");
+    expect(container.querySelector(".text-error")).not.toBeNull();
   });
-  it("projects", () => {
+  it("projects shows description, stack and safe link", () => {
     const { run } = setup();
     const { container } = renderOutput(run("projects"));
-    projects.forEach((p) => expect(container.textContent).toContain(p.name));
+    projects.forEach((p) => {
+      expect(container.textContent).toContain(p.name);
+      expect(container.textContent).toContain(p.description);
+      expect(container.textContent).toContain(p.stack.join(", "));
+    });
+    const withUrl = projects.filter((p) => p.url);
+    const links = container.querySelectorAll("a");
+    expect(links).toHaveLength(withUrl.length);
+    links.forEach((a, i) => {
+      expect(a.getAttribute("href")).toBe(withUrl[i].url);
+      expect(a.getAttribute("target")).toBe("_blank");
+      expect(a.getAttribute("rel")).toBe("noopener noreferrer");
+    });
   });
-  it("skills", () => {
+  it("skills shows category and every item", () => {
     const { run } = setup();
     const { container } = renderOutput(run("skills"));
-    skills.forEach((s) => expect(container.textContent).toContain(s.category));
+    skills.forEach((s) => {
+      expect(container.textContent).toContain(s.category);
+      s.items.forEach((i) => expect(container.textContent).toContain(i));
+    });
   });
-  it("education", () => {
+  it("education shows degree, school and years", () => {
     const { run } = setup();
     const { container } = renderOutput(run("education"));
-    education.forEach((e) => expect(container.textContent).toContain(e.degree));
+    education.forEach((e) => {
+      expect(container.textContent).toContain(e.degree);
+      expect(container.textContent).toContain(e.school);
+      expect(container.textContent).toContain(`${e.start} - ${e.end}`);
+    });
   });
-  it("contact has 3 safe links, mailto email", () => {
+  it("contact has 3 links: mailto without target, 2 safe external", () => {
     const { run } = setup();
     const { container } = renderOutput(run("contact"));
     const links = container.querySelectorAll("a");
     expect(links).toHaveLength(3);
-    links.forEach((a) => {
+    expect(links[0].getAttribute("href")).toMatch(/^mailto:/);
+    expect(links[0].hasAttribute("target")).toBe(false);
+    [links[1], links[2]].forEach((a) => {
       expect(a.getAttribute("target")).toBe("_blank");
       expect(a.getAttribute("rel")).toBe("noopener noreferrer");
     });
-    expect(links[0].getAttribute("href")).toMatch(/^mailto:/);
   });
   it("clear calls ctx.clear and returns null", () => {
     const { ctx, run } = setup();
