@@ -7,7 +7,7 @@ export const educationCommand: Command = {
   run: () => (
     <ul>
       {education.map((e) => (
-        <li key={e.degree}>
+        <li key={`${e.degree}-${e.school}-${e.start}`}>
           <strong>{e.degree}</strong> - {e.school} ({e.start} - {e.end})
         </li>
       ))}

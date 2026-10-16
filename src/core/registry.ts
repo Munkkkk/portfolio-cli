@@ -18,6 +18,9 @@ function errorLine(text: string): CommandOutput {
 export function createRegistry(commands: Command[]): Registry {
   const byName = new Map<string, Command>();
   for (const cmd of commands) {
+    if (cmd.name !== cmd.name.toLowerCase()) {
+      throw new Error(`Command name must be lowercase: ${cmd.name}`);
+    }
     if (byName.has(cmd.name)) {
       throw new Error(`Duplicate command name: ${cmd.name}`);
     }
@@ -37,7 +40,8 @@ export function createRegistry(commands: Command[]): Registry {
       }
       try {
         return cmd.run(input.args, ctx);
-      } catch {
+      } catch (err) {
+        console.error(err);
         return errorLine(`error: ${input.name} failed`);
       }
     },

@@ -10,7 +10,7 @@ export const contactCommand: Command = {
     <ul>
       <li>
         <strong>Email</strong>:{" "}
-        <a href={`mailto:${contact.email}`} target="_blank" rel="noopener noreferrer" style={link}>
+        <a href={`mailto:${contact.email}`} style={link}>
           {contact.email}
         </a>
       </li>

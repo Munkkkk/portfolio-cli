@@ -7,7 +7,7 @@ export const skillsCommand: Command = {
   run: () => (
     <ul>
       {skills.map((s) => (
-        <li key={s.category}>
+        <li key={`${s.category}-${s.items.join()}`}>
           <strong>{s.category}</strong>: {s.items.join(", ")}
         </li>
       ))}

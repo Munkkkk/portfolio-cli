@@ -7,7 +7,7 @@ export const projectsCommand: Command = {
   run: () => (
     <ul>
       {projects.map((p) => (
-        <li key={p.name}>
+        <li key={`${p.name}-${p.url ?? ""}`}>
           <strong>{p.name}</strong> - {p.description}
           <br />
           Stack: {p.stack.join(", ")}

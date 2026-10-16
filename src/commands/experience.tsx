@@ -22,7 +22,7 @@ export const experienceCommand: Command = {
     const n = Number(args[0]);
     if (!/^\d+$/.test(args[0]) || n < 1 || n > experiences.length) {
       return (
-        <p>
+        <p className="text-error">
           error: invalid experience number &quot;{args[0]}&quot; (1-{experiences.length}).
           Usage: {USAGE}
         </p>
@@ -34,7 +34,7 @@ export const experienceCommand: Command = {
         <strong>{e.role}</strong> @ {e.company} ({e.start} - {e.end})
         <ul>
           {e.highlights.map((h) => (
-            <li key={h}>{h}</li>
+            <li key={`${n}-${h}`}>{h}</li>
           ))}
         </ul>
       </div>
