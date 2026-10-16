@@ -12,7 +12,7 @@ interface PromptProps {
 
 export function Prompt({ value, onChange, onSubmit, inputRef }: PromptProps) {
   function handleKeyDown(e: KeyboardEvent<HTMLInputElement>) {
-    if (e.key === "Enter") {
+    if (e.key === "Enter" && !e.nativeEvent.isComposing) {
       e.preventDefault();
       onSubmit();
     }

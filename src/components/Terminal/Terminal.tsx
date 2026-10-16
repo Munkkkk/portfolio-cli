@@ -43,7 +43,7 @@ export function Terminal({ registry, welcome }: TerminalProps) {
       setShowWelcome(false);
     } else {
       const id = nextId.current++;
-      setHistory((h) => [...h, { id, input: raw, output: raw.trim() ? output : null }]);
+      setHistory((h) => [...h, { id, input: raw, output }]);
     }
     inputRef.current?.focus();
   }

@@ -18,7 +18,6 @@ export const projectsCommand: Command = {
                 href={p.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                style={{ overflowWrap: "anywhere" }}
               >
                 {p.url}
               </a>
