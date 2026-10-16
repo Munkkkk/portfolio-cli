@@ -1,0 +1,86 @@
+.terminal {
+  --accent: #5eead4;
+  --muted: #9ca3af;
+  width: 100%;
+  min-height: 100dvh;
+  padding: 16px;
+  background: #0b0f14;
+  color: #e5e7eb;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 15px;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+  cursor: text;
+}
+
+.welcome {
+  margin-bottom: 16px;
+}
+
+.welcomeName {
+  color: var(--accent);
+  font-size: 1.4em;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.suggestions {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.suggestion {
+  min-height: 36px;
+  padding: 4px 12px;
+  border: 1px solid var(--accent);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--accent);
+  font: inherit;
+  cursor: pointer;
+}
+
+.suggestion:hover,
+.suggestion:focus-visible {
+  background: var(--accent);
+  color: #0b0f14;
+}
+
+.entry {
+  margin-bottom: 12px;
+}
+
+.echo {
+  overflow-wrap: anywhere;
+}
+
+.promptLabel {
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+.output {
+  margin-top: 4px;
+  overflow-wrap: anywhere;
+}
+
+.promptRow {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  scroll-margin-bottom: 16px;
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  caret-color: var(--accent);
+}
