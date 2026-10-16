@@ -1,32 +1,47 @@
 # État actuel
 
-Phase : **4/5 — Vérification (agents)**
+Phase : **V1 terminée — 5/5 Déploiement à faire**
 
-Plan : `docs/superpowers/plans/2026-10-16-cli-portfolio.md` · Spec : `docs/superpowers/specs/2026-10-16-cli-portfolio-design.md`
+Plan : `docs/superpowers/plans/2026-10-16-cli-portfolio.md` · Spec : `docs/superpowers/specs/2026-10-16-cli-portfolio-design.md` · Rapports : `docs/reviews/`
 
-## Ledger (une ligne par tâche terminée — ne PAS relancer une tâche marquée complete)
+## Ledger (ne PAS relancer une tâche marquée complete)
 
-- Task 0: complete (commit f1a5f2a) — Next 16.4.2, React 19.3, vitest 5, @types/node 24
-- Task 1: complete (commit 2f6773a, 11 tests) — erreurs rendues en `<span className="text-error">` (style global défini par Agent B)
-- Task 2: complete (commit 406719a, 16 tests) — persona fictive « Alex Morgan »
-- Task 3: complete (commit b252d5d, 5 tests)
-- Task 4: complete (commit 63df3ec) — 32 tests, lint/tsc/build OK, testé à la main (8 commandes, 375 px sans scroll horizontal)
-- Task 5: complete — E2E 26/26 (commit 29b6c11) ; a11y 0 bloquant/2 importants/6 mineurs ; code review 0/1/9 — rapports dans docs/reviews/
-- Task 6 corrections: en cours (1 agent)
+- Task 0: complete (f1a5f2a) — Next 16.4.2, React 19.3, vitest 5, @types/node 24
+- Task 1: complete (2f6773a) — parser + registre ; erreurs en `<span className="text-error">`
+- Task 2: complete (406719a) — persona fictive « Alex Morgan » + 8 commandes
+- Task 3: complete (b252d5d) — Terminal UI
+- Task 4: complete (63df3ec) — intégration dans `src/app/Portfolio.tsx`
+- Task 5: complete (29b6c11, de55288) — E2E, a11y, code review
+- Task 6: complete (2e58023..af32e8a) — 3 importants + mineurs simples corrigés
+- Vérif finale (orchestrateur) : 35 tests unitaires, 26/26 E2E sur build de prod, tsc/lint/build OK, contrôle visuel mobile OK
+
+## Backlog (mineurs non corrigés, volontairement)
+
+- Pas d'ErrorBoundary React autour du terminal (CR M1) — le registre attrape déjà les erreurs des commandes.
+- Pas de test liant les suggestions du bienvenue aux commandes existantes (CR M5).
+- Refocus auto au clic aussi sur mobile (CR M9) — décision de design, spec §6.5.
+- `viewport.interactiveWidget` non défini (UX M3) — non testable sur iOS ici.
+- Boutons de bienvenue sans texte d'aide (UX M4) — choix de copy.
+- Hors V1 (spec §2) : historique ↑/↓, Tab, easter eggs, thèmes, `resume` PDF, FR/EN.
 
 ## Rulings (décisions prises en cours d'exécution)
 
-- Ruling: Tâches 1-3 lancées en parallèle (contrairement au défaut du skill SDD) — demandé explicitement par l'utilisateur, fichiers disjoints — si faux : conflit de fichiers à résoudre à la main en T4.
-- Ruling: pas de revue par tâche ; la revue est faite par l'équipe de vérification T5 — économie de tokens, demandé par l'utilisateur — si faux : bugs détectés plus tard, corrigés en T6.
-- Ruling: travail sur `main` (dépôt neuf, sans remote) — si faux : rien à défaire, aucune publication.
-- Ruling: `@types/node` passé de ^20 à ^24 — vitest 5 l'exige ; Node installé = 24.
+- Ruling: Tâches 1-3 en parallèle — demandé par l'utilisateur, fichiers disjoints.
+- Ruling: pas de revue par tâche ; revue groupée en T5 — économie de tokens.
+- Ruling: travail sur `main` (dépôt neuf, sans remote).
+- Ruling: `@types/node` ^20 → ^24 — exigé par vitest 5.
+- Ruling: assemblage dans `src/app/Portfolio.tsx` (pas `components/`) — règle de dépendance.
+- Ruling: fix lint `react-hooks/refs` par l'orchestrateur (composant WelcomeSlot).
+- Ruling: 5 mineurs reportés au backlog — décisions de design ou plus qu'un fix de 2 lignes.
 
-- Ruling: assemblage dans `src/app/Portfolio.tsx` (client) et pas `src/components/` — la règle de dépendance interdit components → commands/content.
-- Ruling: correction lint `react-hooks/refs` faite par l'orchestrateur en T4 (composant WelcomeSlot) — 3 lignes, bloquait le lint.
+## Prochaines actions possibles
+
+1. Remplacer les données fictives : éditer uniquement `src/content/*.ts` (chercher `TODO`).
+2. Déployer sur Vercel (remote GitHub ou CLI `vercel` ; le connecteur Vercel demande une autorisation).
+3. Fonctions V2 (voir backlog).
 
 ## Notes pour les agents
 
 - Next.js 16 : lire `node_modules/next/dist/docs/` avant d'écrire du code Next (voir AGENTS.md).
+- Lancer : `npm run dev` · Tests : `npm test` et `npm run test:e2e`.
 - Après modif de code : `graphify update .` (consigne utilisateur globale).
-
-Phases : 1 Cadrage ✅ · 2 Spec + plan ✅ · 3 Build · 4 Vérification · 5 Déploiement
