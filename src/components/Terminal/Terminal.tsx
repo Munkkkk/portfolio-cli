@@ -13,6 +13,10 @@ interface TerminalProps {
   welcome: (run: (input: string) => void) => ReactNode;
 }
 
+function WelcomeSlot({ render, run }: { render: TerminalProps["welcome"]; run: (input: string) => void }) {
+  return <>{render(run)}</>;
+}
+
 export function Terminal({ registry, welcome }: TerminalProps) {
   const [history, setHistory] = useState<HistoryEntry[]>([]);
   const [value, setValue] = useState("");
@@ -56,7 +60,7 @@ export function Terminal({ registry, welcome }: TerminalProps) {
 
   return (
     <div className={styles.terminal} onClick={handleClick}>
-      {showWelcome && welcome(run)}
+      {showWelcome && <WelcomeSlot render={welcome} run={run} />}
       <div role="log" aria-live="polite" className={styles.log}>
         {history.map((entry) => (
           <OutputLine key={entry.id} entry={entry} />
