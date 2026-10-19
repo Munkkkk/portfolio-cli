@@ -8,3 +8,4 @@
 - 2026-10-16 — Terminal React fait maison (pas xterm.js) : léger, accessible, découpable entre agents.
 - 2026-10-16 — Process : brainstorming → spec écrite → plan → agents de build en parallèle → équipe d'agents de vérification.
 - 2026-10-16 — V1 livrée. Mineurs reportés (voir STATE.md > Backlog) : décisions de design laissées à l'utilisateur.
+- 2026-10-19 — Design gaming/arcade exploré (maquettes dans .superpowers/brainstorm/, non versionné) puis **abandonné** : on garde le design classique. Raison : cible = boîtes tech et entreprises classiques, risque de paraître peu pro. Idée retenue en option : bouton « QUICK VIEW » (tout le profil d'un coup) pour recruteurs pressés — non décidée.
