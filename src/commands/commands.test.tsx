@@ -152,22 +152,23 @@ describe("outputs", () => {
     expect(container.textContent).toContain("Atouts");
     strengths.forEach((s) => expect(container.textContent).toContain(s));
   });
-  it("contact has 3 safe external links, no mailto", () => {
+  it("contact has 2 safe external links, no mailto", () => {
     const { run } = setup();
     const { container } = renderOutput(run("contact"));
     const links = container.querySelectorAll("a");
-    expect(links).toHaveLength(3);
+    expect(links).toHaveLength(2);
     expect([...links].map((a) => a.getAttribute("href"))).toEqual([
-      contact.github, contact.linktree, contact.artstation,
+      contact.github, contact.linktree,
     ]);
     links.forEach((a) => {
       expect(a.getAttribute("href")).not.toMatch(/^mailto:/);
       expect(a.getAttribute("target")).toBe("_blank");
       expect(a.getAttribute("rel")).toBe("noopener noreferrer");
     });
-    ["GitHub", "Linktree", "ArtStation"].forEach((l) =>
+    ["GitHub", "Linktree"].forEach((l) =>
       expect(container.textContent).toContain(`${l} : https://`),
     );
+    expect(container.textContent).not.toMatch(/artstation/i);
   });
   it("clear calls ctx.clear and returns null", () => {
     const { ctx, run } = setup();

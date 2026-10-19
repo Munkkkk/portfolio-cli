@@ -4,7 +4,6 @@ import { contact } from "@/content/contact";
 const links = [
   { label: "GitHub", href: contact.github },
   { label: "Linktree", href: contact.linktree },
-  { label: "ArtStation", href: contact.artstation },
 ];
 
 export const contactCommand: Command = {

@@ -19,7 +19,7 @@ Plan : `docs/superpowers/plans/2026-10-16-cli-portfolio.md` · Spec : `docs/supe
 
 - Données du CV de Ludwig Marais dans `src/content/` ; tout le texte affiché en français, `lang="fr"`.
 - Nouvelles commandes : `languages`, `interests` (10 commandes au total).
-- Confidentialité (décision utilisateur) : PAS de téléphone, PAS d'email, PAS de RQTH sur le site. Permis B affiché. Contact = GitHub + Linktree + ArtStation.
+- Confidentialité (décision utilisateur) : PAS de téléphone, PAS d'email, PAS de RQTH sur le site. Permis B affiché. Contact = GitHub + Linktree (ArtStation retiré le 2026-10-19 à la demande de l'utilisateur).
 - Projets = repos GitHub portfolio-cli, f1-predictions, mon-prochain-jeu (seuls avec un README exploitable).
 - Process : 1 agent de saisie + 1 agent de relecture séparé (0 bloquant, 2 importants corrigés). Brief et rapports : `.superpowers/sdd/cv-content/` (non versionné).
 - Tests : 38 unitaires, 30 E2E, tsc/lint OK.
