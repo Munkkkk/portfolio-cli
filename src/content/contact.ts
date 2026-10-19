@@ -1,8 +1,7 @@
-// TODO: remplacer par vraies données
-export interface Contact { email: string; github: string; linkedin: string }
+export interface Contact { github: string; linktree: string; artstation: string }
 
 export const contact: Contact = {
-  email: "alex.morgan@example.com",
-  github: "https://github.com/alexmorgan-dev",
-  linkedin: "https://www.linkedin.com/in/alexmorgan-dev",
+  github: "https://github.com/Munkkkk",
+  linktree: "https://linktr.ee/ludwigmrs",
+  artstation: "https://littlerock33.artstation.com/",
 };

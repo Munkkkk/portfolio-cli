@@ -2,7 +2,7 @@ import type { Command } from "@/core/types";
 
 export const helpCommand: Command = {
   name: "help",
-  description: "List available commands",
+  description: "Liste des commandes",
   run: (_args, ctx) => (
     <ul>
       {ctx.commands.map((c) => (

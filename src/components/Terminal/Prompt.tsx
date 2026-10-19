@@ -30,7 +30,7 @@ export function Prompt({ value, onChange, onSubmit, inputRef }: PromptProps) {
         value={value}
         onChange={(e) => onChange(e.target.value)}
         onKeyDown={handleKeyDown}
-        aria-label="Terminal command"
+        aria-label="Commande du terminal"
         autoComplete="off"
         spellCheck={false}
         autoCapitalize="none"

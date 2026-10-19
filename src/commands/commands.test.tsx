@@ -7,6 +7,9 @@ import { experiences } from "@/content/experience";
 import { projects } from "@/content/projects";
 import { skills } from "@/content/skills";
 import { education } from "@/content/education";
+import { languages } from "@/content/languages";
+import { interests, strengths } from "@/content/interests";
+import { contact } from "@/content/contact";
 
 function setup() {
   const ctx: CommandContext = { commands, clear: vi.fn() };
@@ -19,9 +22,9 @@ function setup() {
 }
 
 describe("commands registry", () => {
-  it("has the 8 commands in order, unique, described", () => {
+  it("has the 10 commands in order, unique, described", () => {
     expect(commands.map((c) => c.name)).toEqual([
-      "help", "about", "experience", "projects", "skills", "education", "contact", "clear",
+      "help", "about", "experience", "projects", "skills", "education", "languages", "interests", "contact", "clear",
     ]);
     expect(new Set(commands.map((c) => c.name)).size).toBe(commands.length);
     commands.forEach((c) => expect(c.description.length).toBeGreaterThan(0));
@@ -40,10 +43,10 @@ describe("outputs", () => {
       expect(container.textContent).toContain(c.description);
     });
   });
-  it("about shows name, title, bio and location", () => {
+  it("about shows name, title, bio, location and mobility", () => {
     const { run } = setup();
     const { container } = renderOutput(run("about"));
-    [profile.name, profile.title, profile.bio, profile.location].forEach((t) =>
+    [profile.name, profile.title, profile.bio, profile.location, profile.mobility].forEach((t) =>
       expect(container.textContent).toContain(t),
     );
   });
@@ -53,26 +56,41 @@ describe("outputs", () => {
     const b = renderOutput(run("about", ["extra"])).container.innerHTML;
     expect(b).toBe(a);
   });
-  it("experience lists role, company and dates", () => {
+  it("experience lists role, company, type and dates", () => {
     const { run } = setup();
     const { container } = renderOutput(run("experience"));
     experiences.forEach((e) => {
       expect(container.textContent).toContain(e.role);
       expect(container.textContent).toContain(e.company);
+      if (e.type) expect(container.textContent).toContain(`(${e.type})`);
       expect(container.textContent).toContain(`${e.start} - ${e.end}`);
     });
   });
-  it("experience 1 shows detail only", () => {
+  it("experience 1 shows detail only, with type and stack", () => {
     const { run } = setup();
     const { container } = renderOutput(run("experience", ["1"]));
+    expect(container.textContent).toContain(experiences[0].role);
+    expect(container.textContent).toContain(experiences[0].company);
     experiences[0].highlights.forEach((h) => expect(container.textContent).toContain(h));
     expect(container.textContent).toContain(`${experiences[0].start} - ${experiences[0].end}`);
+    expect(experiences[0].type).toBeTruthy();
+    expect(container.textContent).toContain(`(${experiences[0].type})`);
+    expect(experiences[0].stack?.length).toBeGreaterThan(0);
+    expect(container.textContent).toContain(experiences[0].stack!.join(", "));
     expect(container.textContent).not.toContain(experiences[1].company);
+  });
+  it("experience detail without stack omits the stack line", () => {
+    const { run } = setup();
+    const i = experiences.findIndex((e) => !e.stack);
+    expect(i).toBeGreaterThanOrEqual(0);
+    const { container } = renderOutput(run("experience", [String(i + 1)]));
+    expect(container.textContent).not.toContain("Stack");
+    experiences[i].highlights.forEach((h) => expect(container.textContent).toContain(h));
   });
   it.each(["0", "-1", "abc", "99"])("experience %s shows a clear error with usage", (arg) => {
     const { run } = setup();
     const { container } = renderOutput(run("experience", [arg]));
-    expect(container.textContent).toContain("error: invalid experience number");
+    expect(container.textContent).toContain("erreur : numéro d'expérience invalide");
     expect(container.textContent).toContain(`"${arg}"`);
     expect(container.textContent).toContain(`1-${experiences.length}`);
     expect(container.textContent).toContain("experience [n]");
@@ -99,30 +117,57 @@ describe("outputs", () => {
     const { run } = setup();
     const { container } = renderOutput(run("skills"));
     skills.forEach((s) => {
-      expect(container.textContent).toContain(s.category);
+      expect(container.textContent).toContain(`${s.category} : ${s.items.join(", ")}`);
       s.items.forEach((i) => expect(container.textContent).toContain(i));
     });
   });
-  it("education shows degree, school and years", () => {
+  it("education shows degree, school, years, type and mention", () => {
     const { run } = setup();
     const { container } = renderOutput(run("education"));
     education.forEach((e) => {
       expect(container.textContent).toContain(e.degree);
       expect(container.textContent).toContain(e.school);
       expect(container.textContent).toContain(`${e.start} - ${e.end}`);
+      if (e.type) expect(container.textContent).toContain(`(${e.type})`);
+      if (e.mention) expect(container.textContent).toContain(e.mention);
+    });
+    expect(education.some((e) => e.type)).toBe(true);
+    expect(education.some((e) => e.mention)).toBe(true);
+  });
+  it("languages shows every name and level", () => {
+    const { run } = setup();
+    const { container } = renderOutput(run("languages"));
+    languages.forEach((l) => {
+      expect(container.textContent).toContain(l.name);
+      expect(container.textContent).toContain(l.level);
     });
   });
-  it("contact has 3 links: mailto without target, 2 safe external", () => {
+  it("interests shows name, detail and strengths", () => {
+    const { run } = setup();
+    const { container } = renderOutput(run("interests"));
+    interests.forEach((i) => {
+      expect(container.textContent).toContain(i.name);
+      expect(container.textContent).toContain(i.detail);
+    });
+    expect(container.textContent).toContain("Atouts");
+    strengths.forEach((s) => expect(container.textContent).toContain(s));
+  });
+  it("contact has 3 safe external links, no mailto", () => {
     const { run } = setup();
     const { container } = renderOutput(run("contact"));
     const links = container.querySelectorAll("a");
     expect(links).toHaveLength(3);
-    expect(links[0].getAttribute("href")).toMatch(/^mailto:/);
-    expect(links[0].hasAttribute("target")).toBe(false);
-    [links[1], links[2]].forEach((a) => {
+    expect([...links].map((a) => a.getAttribute("href"))).toEqual([
+      contact.github, contact.linktree, contact.artstation,
+    ]);
+    links.forEach((a) => {
+      expect(a.getAttribute("href")).not.toMatch(/^mailto:/);
       expect(a.getAttribute("target")).toBe("_blank");
       expect(a.getAttribute("rel")).toBe("noopener noreferrer");
     });
+    ["GitHub", "Linktree", "ArtStation"].forEach((l) =>
+      expect(container.textContent).toContain(`${l} : https://`),
+    );
   });
   it("clear calls ctx.clear and returns null", () => {
     const { ctx, run } = setup();

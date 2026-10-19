@@ -1,29 +1,25 @@
 import type { Command } from "@/core/types";
 import { contact } from "@/content/contact";
 
+const links = [
+  { label: "GitHub", href: contact.github },
+  { label: "Linktree", href: contact.linktree },
+  { label: "ArtStation", href: contact.artstation },
+];
+
 export const contactCommand: Command = {
   name: "contact",
-  description: "Email, GitHub and LinkedIn",
+  description: "GitHub et liens",
   run: () => (
     <ul>
-      <li>
-        <strong>Email</strong>:{" "}
-        <a href={`mailto:${contact.email}`}>
-          {contact.email}
-        </a>
-      </li>
-      <li>
-        <strong>GitHub</strong>:{" "}
-        <a href={contact.github} target="_blank" rel="noopener noreferrer">
-          {contact.github}
-        </a>
-      </li>
-      <li>
-        <strong>LinkedIn</strong>:{" "}
-        <a href={contact.linkedin} target="_blank" rel="noopener noreferrer">
-          {contact.linkedin}
-        </a>
-      </li>
+      {links.map((l) => (
+        <li key={l.label}>
+          <strong>{l.label}</strong> :{" "}
+          <a href={l.href} target="_blank" rel="noopener noreferrer">
+            {l.href}
+          </a>
+        </li>
+      ))}
     </ul>
   ),
 };

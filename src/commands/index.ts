@@ -5,6 +5,8 @@ import { experienceCommand } from "./experience";
 import { projectsCommand } from "./projects";
 import { skillsCommand } from "./skills";
 import { educationCommand } from "./education";
+import { languagesCommand } from "./languages";
+import { interestsCommand } from "./interests";
 import { contactCommand } from "./contact";
 import { clearCommand } from "./clear";
 
@@ -15,6 +17,8 @@ export const commands: Command[] = [
   projectsCommand,
   skillsCommand,
   educationCommand,
+  languagesCommand,
+  interestsCommand,
   contactCommand,
   clearCommand,
 ];

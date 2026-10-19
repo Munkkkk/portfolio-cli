@@ -8,13 +8,13 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Portfolio — Terminal",
-  description: "A terminal-style portfolio",
+  title: "Ludwig Marais — Portfolio",
+  description: "Portfolio interactif façon terminal de Ludwig Marais, développeur web full stack en alternance.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${jetbrainsMono.variable}`}>
+    <html lang="fr" className={`${jetbrainsMono.variable}`}>
       <body>{children}</body>
     </html>
   );

@@ -43,7 +43,7 @@ describe("createRegistry", () => {
     const out = createRegistry([echo, boom]).execute(parse("nope"), ctx);
     const { container } = renderOutput(out);
     expect(container.textContent).toContain(
-      'command not found: nope. Type "help" to see available commands.',
+      'commande introuvable : nope. Tapez "help" pour voir les commandes disponibles.',
     );
   });
 
@@ -54,6 +54,6 @@ describe("createRegistry", () => {
       out = reg.execute(parse("boom"), ctx);
     }).not.toThrow();
     const { container } = renderOutput(out!);
-    expect(container.textContent).toContain("error: boom failed");
+    expect(container.textContent).toContain("erreur : boom a échoué");
   });
 });

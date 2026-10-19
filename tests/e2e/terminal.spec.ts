@@ -1,7 +1,7 @@
 import { test, expect, type Page } from "@playwright/test";
 import { profile } from "../../src/content/profile";
 
-const input = (page: Page) => page.getByRole("textbox", { name: "Terminal command" });
+const input = (page: Page) => page.getByRole("textbox", { name: "Commande du terminal" });
 const log = (page: Page) => page.getByRole("log");
 
 async function run(page: Page, cmd: string) {
@@ -17,11 +17,13 @@ test.beforeEach(async ({ page }) => {
 const cases: Array<[string, string | RegExp]> = [
   ["help", "experience"],
   ["about", profile.name],
-  ["experience", "Nimbus Labs"],
-  ["projects", "TaskFlow"],
+  ["experience", "Monar.IO"],
+  ["projects", "portfolio-cli"],
   ["skills", "TypeScript"],
-  ["education", "MSc Computer Science"],
-  ["contact", "alex.morgan@example.com"],
+  ["education", "Wild School"],
+  ["languages", "Anglais"],
+  ["interests", "Atouts"],
+  ["contact", "https://github.com/Munkkkk"],
 ];
 
 for (const [cmd, expected] of cases) {
@@ -41,7 +43,7 @@ test('command "clear" empties the log and hides the welcome', async ({ page }) =
 
 test("unknown command shows not found message", async ({ page }) => {
   await run(page, "foo");
-  await expect(log(page)).toContainText('command not found: foo. Type "help" to see available commands.');
+  await expect(log(page)).toContainText('commande introuvable : foo. Tapez "help" pour voir les commandes disponibles.');
 });
 
 test("experience 99 shows usage", async ({ page }) => {
@@ -52,7 +54,7 @@ test("experience 99 shows usage", async ({ page }) => {
 test("no horizontal overflow at 375px after projects", async ({ page }) => {
   await page.setViewportSize({ width: 375, height: 812 });
   await run(page, "projects");
-  await expect(log(page)).toContainText("TaskFlow");
+  await expect(log(page)).toContainText("portfolio-cli");
   const sw = await page.evaluate(() => document.documentElement.scrollWidth);
   expect(sw).toBeLessThanOrEqual(375);
 });

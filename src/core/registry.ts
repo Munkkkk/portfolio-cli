@@ -35,14 +35,14 @@ export function createRegistry(commands: Command[]): Registry {
       const cmd = byName.get(input.name);
       if (!cmd) {
         return errorLine(
-          `command not found: ${input.name}. Type "help" to see available commands.`,
+          `commande introuvable : ${input.name}. Tapez "help" pour voir les commandes disponibles.`,
         );
       }
       try {
         return cmd.run(input.args, ctx);
       } catch (err) {
         console.error(err);
-        return errorLine(`error: ${input.name} failed`);
+        return errorLine(`erreur : ${input.name} a échoué`);
       }
     },
   };

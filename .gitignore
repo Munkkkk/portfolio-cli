@@ -46,3 +46,6 @@ next-env.d.ts
 
 # superpowers workspace
 /.superpowers/
+
+# graphify (graphe local, régénérable)
+/graphify-out/

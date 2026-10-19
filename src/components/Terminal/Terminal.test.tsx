@@ -30,7 +30,7 @@ function setup() {
   return userEvent.setup();
 }
 
-const input = () => screen.getByRole("textbox", { name: "Terminal command" });
+const input = () => screen.getByRole("textbox", { name: "Commande du terminal" });
 
 describe("Terminal", () => {
   it("has an accessible input and log", () => {
@@ -57,11 +57,11 @@ describe("Terminal", () => {
 
   it("clear empties the log and hides the welcome", async () => {
     const user = setup();
-    expect(screen.getByText('Type "help" to get started.')).toBeInTheDocument();
+    expect(screen.getByText('Tapez "help" pour commencer.')).toBeInTheDocument();
     await user.type(input(), "echo a{Enter}clear{Enter}");
     expect(screen.getByRole("log")).toBeEmptyDOMElement();
     expect(
-      screen.queryByText('Type "help" to get started.'),
+      screen.queryByText('Tapez "help" pour commencer.'),
     ).not.toBeInTheDocument();
   });
 
@@ -92,7 +92,7 @@ describe("Terminal error handling", () => {
     const user = setupReal();
     await user.type(input(), "foo{Enter}");
     const log = screen.getByRole("log");
-    expect(log).toHaveTextContent('command not found: foo. Type "help" to see available commands.');
+    expect(log).toHaveTextContent('commande introuvable : foo. Tapez "help" pour voir les commandes disponibles.');
     await user.type(input(), "echo still-here{Enter}");
     expect(within(log).getByText("still-here")).toBeInTheDocument();
   });
@@ -102,7 +102,7 @@ describe("Terminal error handling", () => {
     const user = setupReal();
     await user.type(input(), "boom{Enter}");
     const log = screen.getByRole("log");
-    expect(log).toHaveTextContent("error: boom failed");
+    expect(log).toHaveTextContent("erreur : boom a échoué");
     expect(input()).toHaveValue("");
     await user.type(input(), "echo after{Enter}");
     expect(within(log).getByText("after")).toBeInTheDocument();

@@ -10,7 +10,7 @@ export function Welcome({ name, suggestions, onRun }: WelcomeProps) {
   return (
     <section className={styles.welcome}>
       <h1 className={styles.welcomeName}>{name}</h1>
-      <p>Type &quot;help&quot; to get started.</p>
+      <p>Tapez &quot;help&quot; pour commencer.</p>
       <ul className={styles.suggestions}>
         {suggestions.map((s) => (
           <li key={s}>

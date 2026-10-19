@@ -5,7 +5,7 @@ const USAGE = "experience [n]";
 
 export const experienceCommand: Command = {
   name: "experience",
-  description: "Work experience (experience [n] for details)",
+  description: "Expériences (experience [n] pour le détail)",
   usage: USAGE,
   run: (args) => {
     if (args.length === 0) {
@@ -13,7 +13,8 @@ export const experienceCommand: Command = {
         <ul>
           {experiences.map((e, i) => (
             <li key={`${e.company}-${e.start}`}>
-              {i + 1}. <strong>{e.role}</strong> @ {e.company} ({e.start} - {e.end})
+              {i + 1}. <strong>{e.role}</strong> @ {e.company}
+              {e.type && <> ({e.type})</>} ({e.start} - {e.end})
             </li>
           ))}
         </ul>
@@ -23,15 +24,17 @@ export const experienceCommand: Command = {
     if (!/^\d+$/.test(args[0]) || n < 1 || n > experiences.length) {
       return (
         <p className="text-error">
-          error: invalid experience number &quot;{args[0]}&quot; (1-{experiences.length}).
-          Usage: {USAGE}
+          erreur : numéro d&apos;expérience invalide &quot;{args[0]}&quot; (1-{experiences.length}).
+          Usage : {USAGE}
         </p>
       );
     }
     const e = experiences[n - 1];
     return (
       <div>
-        <strong>{e.role}</strong> @ {e.company} ({e.start} - {e.end})
+        <strong>{e.role}</strong> @ {e.company}
+        {e.type && <> ({e.type})</>} ({e.start} - {e.end})
+        {e.stack && <p>Stack : {e.stack.join(", ")}</p>}
         <ul>
           {e.highlights.map((h) => (
             <li key={`${n}-${h}`}>{h}</li>
