@@ -1,6 +1,6 @@
 # État actuel
 
-Phase : **V1 en preview Vercel — production en attente des vraies données**
+Phase : **Vraies données intégrées (76cc642) — preview Vercel à redéployer, production à faire**
 
 Plan : `docs/superpowers/plans/2026-10-16-cli-portfolio.md` · Spec : `docs/superpowers/specs/2026-10-16-cli-portfolio-design.md` · Rapports : `docs/reviews/`
 
@@ -14,6 +14,16 @@ Plan : `docs/superpowers/plans/2026-10-16-cli-portfolio.md` · Spec : `docs/supe
 - Task 5: complete (29b6c11, de55288) — E2E, a11y, code review
 - Task 6: complete (2e58023..af32e8a) — 3 importants + mineurs simples corrigés
 - Vérif finale (orchestrateur) : 35 tests unitaires, 26/26 E2E sur build de prod, tsc/lint/build OK, contrôle visuel mobile OK
+
+## Contenu réel (2026-10-19)
+
+- Données du CV de Ludwig Marais dans `src/content/` ; tout le texte affiché en français, `lang="fr"`.
+- Nouvelles commandes : `languages`, `interests` (10 commandes au total).
+- Confidentialité (décision utilisateur) : PAS de téléphone, PAS d'email, PAS de RQTH sur le site. Permis B affiché. Contact = GitHub + Linktree + ArtStation.
+- Projets = repos GitHub portfolio-cli, f1-predictions, mon-prochain-jeu (seuls avec un README exploitable).
+- Process : 1 agent de saisie + 1 agent de relecture séparé (0 bloquant, 2 importants corrigés). Brief et rapports : `.superpowers/sdd/cv-content/` (non versionné).
+- Tests : 38 unitaires, 30 E2E, tsc/lint OK.
+- À relire par l'utilisateur : la bio (`src/content/profile.ts`) est une première version rédigée à partir du CV.
 
 ## Déploiement
 
@@ -47,7 +57,7 @@ Plan : `docs/superpowers/plans/2026-10-16-cli-portfolio.md` · Spec : `docs/supe
 
 ## Prochaines actions possibles
 
-1. Remplacer les données fictives : éditer uniquement `src/content/*.ts` (chercher `TODO`).
+1. Relire la bio, puis code review + push + redéploiement (preview puis production).
 2. Passer en production (voir section Déploiement).
 3. Fonctions V2 (voir backlog).
 
