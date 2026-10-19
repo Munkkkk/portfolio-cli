@@ -1,6 +1,6 @@
 # État actuel
 
-Phase : **Vraies données intégrées (76cc642) — preview Vercel à redéployer, production à faire**
+Phase : **Vraies données en preview Vercel (ea8e833) — production à faire**
 
 Plan : `docs/superpowers/plans/2026-10-16-cli-portfolio.md` · Spec : `docs/superpowers/specs/2026-10-16-cli-portfolio-design.md` · Rapports : `docs/reviews/`
 
@@ -23,6 +23,8 @@ Plan : `docs/superpowers/plans/2026-10-16-cli-portfolio.md` · Spec : `docs/supe
 - Projets = repos GitHub portfolio-cli, f1-predictions, mon-prochain-jeu (seuls avec un README exploitable).
 - Process : 1 agent de saisie + 1 agent de relecture séparé (0 bloquant, 2 importants corrigés). Brief et rapports : `.superpowers/sdd/cv-content/` (non versionné).
 - Tests : 38 unitaires, 30 E2E, tsc/lint OK.
+- Code review pré-push (ea8e833) : rugby, README, spec corrigés. Non faits (choix utilisateur) : guillemets « » dans les messages d'erreur, mois manquants pour Monar.IO (2024-2025), stack visible seulement dans `experience <n>`.
+- Poussé sur `main` et `preview` ; preview redéployé (dpl_68xeRHu1…, READY).
 - À relire par l'utilisateur : la bio (`src/content/profile.ts`) est une première version rédigée à partir du CV.
 
 ## Déploiement
@@ -57,7 +59,7 @@ Plan : `docs/superpowers/plans/2026-10-16-cli-portfolio.md` · Spec : `docs/supe
 
 ## Prochaines actions possibles
 
-1. Relire la bio, puis code review + push + redéploiement (preview puis production).
+1. Passer en production : déployer depuis `main` (target production).
 2. Passer en production (voir section Déploiement).
 3. Fonctions V2 (voir backlog).
 
