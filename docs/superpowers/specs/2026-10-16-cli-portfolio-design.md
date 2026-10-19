@@ -1,5 +1,7 @@
 # Portfolio CLI — Spec de design
 
+> **Mise à jour 2026-10-19 :** le site est passé en français avec le vrai CV et 10 commandes (+ `languages`, `interests`). Les messages exacts en anglais de ce document sont remplacés par : `commande introuvable : <name>. Tapez "help" pour voir les commandes disponibles.` · `erreur : <name> a échoué` · `Tapez "help" pour commencer.` · aria-label `Commande du terminal`. Le contact n'affiche ni email ni téléphone (décision de l'utilisateur). Le code et les tests font foi.
+
 Date : 2026-10-16 · Statut : en revue
 
 ## 1. Objectif

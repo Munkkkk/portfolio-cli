@@ -1,5 +1,7 @@
 # Portfolio CLI Implementation Plan
 
+> **Mise à jour 2026-10-19 :** le site est passé en français avec le vrai CV et 10 commandes (+ `languages`, `interests`). Les messages exacts en anglais de ce document sont remplacés par : `commande introuvable : <name>. Tapez "help" pour voir les commandes disponibles.` · `erreur : <name> a échoué` · `Tapez "help" pour commencer.` · aria-label `Commande du terminal`. Le contact n'affiche ni email ni téléphone (décision de l'utilisateur). Le code et les tests font foi.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Un site Next.js qui imite un terminal ; le visiteur tape 8 commandes pour lire un portfolio (données fictives).

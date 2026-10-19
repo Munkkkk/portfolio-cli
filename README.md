@@ -1,6 +1,6 @@
 # portfolio-cli
 
-Portfolio interactif façon terminal : on tape des commandes (`help`, `about`, `experience`, `projects`, `skills`, `education`, `contact`, `clear`) pour découvrir le profil.
+Portfolio interactif façon terminal : on tape des commandes (`help`, `about`, `experience`, `projects`, `skills`, `education`, `languages`, `interests`, `contact`, `clear`) pour découvrir le profil. Contenu en français.
 
 **Stack :** Next.js 16 (App Router) · React 19 · TypeScript strict · CSS Modules · Vitest · Playwright
 
