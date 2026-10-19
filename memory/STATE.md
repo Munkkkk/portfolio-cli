@@ -1,6 +1,6 @@
 # État actuel
 
-Phase : **Vraies données en preview Vercel (ea8e833) — production à faire**
+Phase : **EN PRODUCTION — https://portfolio-cli-omega.vercel.app (ea8e833)**
 
 Plan : `docs/superpowers/plans/2026-10-16-cli-portfolio.md` · Spec : `docs/superpowers/specs/2026-10-16-cli-portfolio-design.md` · Rapports : `docs/reviews/`
 
@@ -34,7 +34,7 @@ Plan : `docs/superpowers/plans/2026-10-16-cli-portfolio.md` · Spec : `docs/supe
 - Vercel : projet `portfolio-cli` (prj_2KvtGWx9ncRiawNGmjcxqTUgzhl7, team munk-build-project), PAS relié à Git (pas d'auto-deploy).
 - Preview : https://portfolio-cli-git-preview-munk-build-project.vercel.app — protégé par Vercel Authentication (visible seulement connecté).
 - Un premier déploiement depuis `main` est parti en production → annulé avant la fin du build (dpl_8VYD…, CANCELED). Déployer depuis `main` = production.
-- Production : quand les vraies données sont dans `src/content/`, déployer depuis `main` (target production).
+- **Production (2026-10-19)** : https://portfolio-cli-omega.vercel.app — public (200), dpl_GpsxiAm81…, commit ea8e833. Les autres alias `*-munk-build-project.vercel.app` restent protégés par Vercel Authentication (normal). Projet non relié à Git : pour mettre à jour, code review → push → `create_deployment` (ref main, target production).
 - Hook local : `code-review` obligatoire avant tout push (SHA relus dans ~/.claude/reviewed-shas.txt).
 
 ## Backlog (mineurs non corrigés, volontairement)
@@ -59,8 +59,8 @@ Plan : `docs/superpowers/plans/2026-10-16-cli-portfolio.md` · Spec : `docs/supe
 
 ## Prochaines actions possibles
 
-1. Passer en production : déployer depuis `main` (target production).
-2. Passer en production (voir section Déploiement).
+1. Partager le lien https://portfolio-cli-omega.vercel.app (CV, LinkedIn, Linktree).
+2. Optionnel : domaine perso, relier le projet Vercel à GitHub pour l'auto-deploy.
 3. Fonctions V2 (voir backlog).
 
 ## Notes pour les agents
